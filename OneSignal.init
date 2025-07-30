@@ -1,0 +1,8 @@
+OneSignal.init({
+  appId: "TON_APP_ID",
+  serviceWorkerPath: 'OneSignalSDKWorker.js',
+  serviceWorkerUpdaterPath: 'OneSignalSDKUpdaterWorker.js',
+  notifyButton: {
+    enable: true,
+  }
+});
