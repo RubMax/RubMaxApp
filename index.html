@@ -15,7 +15,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="https://script.google.com/macros/s/AKfycbwoTyj8mpGYPfWCOxszGA-SPYTSBsJbJoHyFKgIr-b5xSAu-CO9pgE3bCebLGAWCVDnPg/exec?page=manifest">
-  </head>
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "74c55b52-b0e7-4e18-8b6f-5994235ccda1",
+      safari_web_id: "web.onesignal.auto.0b751c21-4ab5-448f-a888-cd2e20e2cfd5",
+      notifyButton: {
+        enable: true,
+      },
+    });
+  });
+</script>
+</head>
 <body>
   
   <!-- En-tête fixe -->
