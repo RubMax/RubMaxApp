@@ -15,15 +15,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="https://script.google.com/macros/s/AKfycbwoTyj8mpGYPfWCOxszGA-SPYTSBsJbJoHyFKgIr-b5xSAu-CO9pgE3bCebLGAWCVDnPg/exec?page=manifest">
-<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-<script>
-  window.OneSignal = window.OneSignal || [];
-  OneSignal.push(function() {
-    OneSignal.init({
-      appId: "05d87070-7bc7-4611-95d5-4ace881b881e", // 👈 Your appId goes here
-    });
-  });
-</script>
 
 </head>
 <body>
@@ -131,6 +122,32 @@
   <script src="install.js"></script>
 
 
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.min.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(function(OneSignal) {
+    OneSignal.init({
+      appId: "f9f8692f-addb-4a47-8e2d-f7dbeb6a90ea", // 🔁 à remplacer
+      serviceWorkerPath: "OneSignalSDKWorker.js",
+      serviceWorkerUpdaterPath: "OneSignalSDKUpdaterWorker.js",
+      notifyButton: {
+        enable: true,
+      },
+      promptOptions: {
+        slidedown: {
+          enabled: true,
+          actionMessage: "Souhaitez-vous recevoir des notifications de RubMax ?",
+          acceptButtonText: "Oui",
+          cancelButtonText: "Non"
+        }
+      },
+      welcomeNotification: {
+        title: "Bienvenue sur RubMax !",
+        message: "Merci d’avoir activé les notifications.",
+      },
+    });
+  });
+</script>
 
 
 </body>
