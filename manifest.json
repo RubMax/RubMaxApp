@@ -1,10 +1,13 @@
 {
-  "name": "RubMax Serviços",
+  "name": "RubMax Services",
   "short_name": "RubMax",
-  "start_url": "./index.html",
+  "start_url": "/RubMaxAppTesNatifications/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#00b894",
+  "theme_color": "#d32f2f",
+  "orientation": "portrait",
+  "scope": "/RubMaxAppTesNatifications/",
+  "description": "Application de services RubMax avec notifications et PWA",
   "icons": [
     {
       "src": "icon-192.png",
@@ -12,6 +15,15 @@
       "type": "image/png"
     },
     {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
+
+
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
