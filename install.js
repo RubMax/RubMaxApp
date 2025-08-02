@@ -44,5 +44,3 @@ document.addEventListener('DOMContentLoaded', () => {
     alert("ℹ️ L'installation automatique n'est pas disponible.\nAjoutez manuellement via le menu du navigateur.");
   }
 };
-
-
