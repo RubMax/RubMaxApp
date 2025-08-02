@@ -113,7 +113,7 @@ if ('serviceWorker' in navigator) {
   sections.forEach((section, index) => {
     const sectionId = generateSectionId(section);
     const button = document.createElement('a');
-    button.href = `#${sectionId}`;
+    button.href = #${sectionId};
     button.textContent = section.toUpperCase();
     button.className = 'section-btn';
 
@@ -223,7 +223,7 @@ function handleScroll() {
       document.querySelectorAll('.section-btn').forEach(btn => {
         btn.classList.remove('active');
       });
-      document.querySelector(`.section-btn[href="#${sectionId}"]`).classList.add('active');
+      document.querySelector(.section-btn[href="#${sectionId}"]).classList.add('active');
     }
   });
 }
@@ -266,7 +266,7 @@ function displayProduits(data) {
         const descriptionHtml = produit.description.replace(/\n/g, '<br>');
         const descriptionParam = encodeURIComponent(produit.description);
 
-        div.innerHTML = `
+        div.innerHTML = 
           <div class="article-image">
             <img src="${produit.image ? escapeHtml(produit.image) : 'https://iili.io/F3yIWCb.png'}" 
                  alt="${escapeHtml(produit.nom)}" 
@@ -282,16 +282,16 @@ function displayProduits(data) {
   try {
     if (produit.prix.includes('-')) {
       const [oldPrice, newPrice] = produit.prix.split('-').map(p => escapeHtml(p.trim()));
-      return `
+      return 
         <div class="price-container">
           <span class="old-price">R$ ${oldPrice}</span>
           <span class="new-price">R$ ${newPrice}</span>
         </div>
-      `;
+      ;
     }
-    return `<p>R$ <strong>${escapeHtml(produit.prix)}</strong></p>`;
+    return <p>R$ <strong>${escapeHtml(produit.prix)}</strong></p>;
   } catch (e) {
-    return `<p>R$ <strong>${escapeHtml(produit.prix)}</strong></p>`;
+    return <p>R$ <strong>${escapeHtml(produit.prix)}</strong></p>;
   }
 })() : ''}
 
@@ -312,17 +312,17 @@ ${(() => {
     .filter(t => t !== '');
 
   const taillesEncadrees = taillesArray.map(taille => 
-  `<span class="taille-encadree">🔹 ${escapeHtml(taille)}</span>`
+  <span class="taille-encadree">🔹 ${escapeHtml(taille)}</span>
 ).join(' ');
 
-  return `
-    ${note ? `<p class="note-text"><strong>${escapeHtml(note)}</strong></p>` : ''}
-    ${taillesArray.length > 0 ? `
+  return 
+    ${note ? <p class="note-text"><strong>${escapeHtml(note)}</strong></p> : ''}
+    ${taillesArray.length > 0 ? 
       <div class="tailles-container">
         ${taillesEncadrees}
       </div>
-    ` : ''}
-  `;
+     : ''}
+  ;
 })()}
 <br>
             <button class="open-button" onclick="showPopup('${escapeHtml(produit.image)}', '${escapeHtml(produit.nom)}', '${descriptionParam}', '${escapeHtml(produit.prix)}', '${escapeHtml(produit.tailles)}', '${escapeHtml(produit.code)}')">Solicite/Realise</button>
@@ -330,7 +330,7 @@ ${(() => {
           
 
           </div>
-        `;
+        ;
         sectionContainer.appendChild(div);
       });
   });
@@ -384,19 +384,19 @@ ${(() => {
   
   // Ajouter le texte en gras s'il existe
   if (boldText) {
-    htmlContent += `<div class="pub-bold-text" style="font-weight: bold; font-size: 2rem; margin-bottom: 1rem;">
+    htmlContent += <div class="pub-bold-text" style="font-weight: bold; font-size: 2rem; margin-bottom: 1rem;">
                     ${escapeHtml(boldText).replace(/\n/g, '<br>')}
-                   </div>`;
+                   </div>;
   }
   
   // Ajouter l'image si elle existe
   if (imageUrl) {
-    htmlContent += `<img src="${escapeHtml(imageUrl)}" class="pub-image" alt="Publicité">`;
+    htmlContent += <img src="${escapeHtml(imageUrl)}" class="pub-image" alt="Publicité">;
   }
   
   // Ajouter le texte normal s'il existe
   if (text) {
-    htmlContent += `<div class="pub-text">${escapeHtml(text).replace(/\n/g, '<br>')}</div>`;
+    htmlContent += <div class="pub-text">${escapeHtml(text).replace(/\n/g, '<br>')}</div>;
   }
   
   document.getElementById('pub-container').innerHTML = htmlContent;
@@ -410,7 +410,7 @@ ${(() => {
       
       pubItems.forEach((_, index) => {
         const dot = document.createElement('span');
-        dot.className = `pub-dot ${index === currentPubIndex ? 'active' : ''}`;
+        dot.className = pub-dot ${index === currentPubIndex ? 'active' : ''};
         dot.onclick = () => {
           currentPubIndex = index;
           showCurrentPub();
@@ -480,31 +480,31 @@ ${(() => {
 
   let sizesHTML = '';
   if (hasMultipleSizes) {
-    sizesHTML = `
+    sizesHTML = 
   <p></p>
   <div class="sizes-list" id="sizes-container">
-    ${sizesArray.map(size => `
+    ${sizesArray.map(size => 
       <span class="size-item" onclick="selectSize(this, '${escapeHtml(size)}')">${escapeHtml(size)}</span>
-    `).join('')}
+    ).join('')}
   </div>
-`;
+;
   } else if (sizesArray.length === 1) {
-    sizesHTML = `
+    sizesHTML = 
       <p><strong>${escapeHtml(sizesArray[0])}</strong></p>
-    `;
+    ;
   } else {
-    sizesHTML = ``;
+    sizesHTML = `;
   }
 
   // Mettre à jour le contenu du popup
-  document.getElementById("popup-details").innerHTML = `
+  document.getElementById("popup-details").innerHTML = 
     <h4>${escapeHtml(nom)}</h4>
     
     ${prix?.trim() ? (() => {
       // Vérifie si le prix contient un séparateur "-"
       if (prix.includes('-')) {
         const [oldPrice, newPrice] = prix.split('-').map(p => p.trim());
-        return `
+        return 
           <div class="price-highlight">
             <div class="dual-price-container">
               <div class="old-price">
@@ -517,15 +517,15 @@ ${(() => {
               </div>
             </div>
           </div>
-        `;
+        ;
       }
       // Cas normal (un seul prix)
-      return `
+      return 
         <div class="price-highlight">
           <span class="currency-symbol">R$</span>
           <span class="price-amount">${escapeHtml(prix)}</span>
         </div>
-      `;
+      ;
     })() : ''}
     
     <div>
@@ -548,7 +548,7 @@ ${(() => {
         ${decodeURIComponent(description).replace(/\n/g, '<br>')}
       </div>
     </div>
-  `;
+  ;
 
   // Afficher ou masquer le bouton WhatsApp selon le paramètre
   const whatsappButton = document.getElementById("whatsappButton");
@@ -591,7 +591,7 @@ ${(() => {
       });
       
       // Positionner la galerie sur l'image actuelle
-      galleryImages.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+      galleryImages.style.transform = translateX(-${currentImageIndex * 100}%);
     }
     
     function prevImage() {
@@ -671,17 +671,17 @@ ${(() => {
     return;
   }
 
-  let message = `Olá, Gostaria de solicitar, fazer ou saber mais sobre este produto: ${currentProduct.nom}\n` +
-                `Codigo : ${currentProduct.code}\n` +
-                `Preco : R$ ${currentProduct.prix}`;
+  let message = Olá, Gostaria de solicitar, fazer ou saber mais sobre este produto: ${currentProduct.nom}\n +
+                Codigo : ${currentProduct.code}\n +
+                Preco : R$ ${currentProduct.prix};
 
   if (currentProduct.selectedSize) {
-    message += `\nT/Desc : ${currentProduct.selectedSize}`;
+    message += \nT/Desc : ${currentProduct.selectedSize};
   } else if (sizesArray.length === 1) {
-    message += `\nT/Desc : ${sizesArray[0]}`;
+    message += \nT/Desc : ${sizesArray[0]};
   }
 
-  window.open(`https://wa.me/916204805?text=${encodeURIComponent(message)}`, '_blank');
+  window.open(https://wa.me/916204805?text=${encodeURIComponent(message)}, '_blank');
 }
 
 function closePopup() {
@@ -706,7 +706,7 @@ function closePopup() {
   alertBox.style.textAlign = 'center';
   alertBox.style.borderRadius = '8px';
   alertBox.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
-  alertBox.innerHTML = `
+  alertBox.innerHTML = 
     <p style="margin: 0; font-size: 40px;">${message}</p>
     <button id="close-alert" style="
       margin-top: 15px;
@@ -718,7 +718,7 @@ function closePopup() {
       border-radius: 5px;
       cursor: pointer;
     ">OK</button>
-  `;
+  ;
 
   document.body.appendChild(alertBox);
 
@@ -746,7 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const maxDelay = 600; // délai max entre 2 taps
 
   logo.addEventListener('touchstart', () => {
-    const now = Date.now());
+    const now = Date.now(){ passive: true });
 
     if (now - lastTapTime < maxDelay) {
       tapCount++;
@@ -788,7 +788,7 @@ function initLogoTouchHandler(logo) {
   let lastTap = 0;
 
   logo.addEventListener('touchstart', () => {
-    const now = Date.now());
+    const now = Date.now(){ passive: true });
     if (now - lastTap < 600) {
       tapCount++;
     } else {
@@ -811,10 +811,3 @@ function initLogoTouchHandler(logo) {
 }
 
 document.addEventListener('DOMContentLoaded', waitForLogoAndInit);
-
-
-
-
-
-
-
