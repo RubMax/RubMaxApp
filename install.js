@@ -1,3 +1,5 @@
+window.deferredPrompt = null;
+
 document.addEventListener('DOMContentLoaded', () => {
   const installBtn = document.getElementById('installBtn');
   if (!installBtn) return;
@@ -38,9 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Si beforeinstallprompt n’est jamais déclenché
   installBtn.onclick = () => {
-  if (isInstalled) {
-    alert("✅ L'application est déjà installée.");
-  } else if (!window.deferredPrompt) {
-    alert("ℹ️ L'installation automatique n'est pas disponible.\nAjoutez manuellement via le menu du navigateur.");
-  }
-};
+    if (isInstalled) {
+      alert("✅ L'application est déjà installée.");
+    } else if (!window.deferredPrompt) {
+      alert("ℹ️ L'installation automatique n'est pas disponible.\nAjoutez manuellement via le menu du navigateur.");
+    }
+  };
+});
