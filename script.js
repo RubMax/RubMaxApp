@@ -746,7 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const maxDelay = 600; // délai max entre 2 taps
 
   logo.addEventListener('touchstart', () => {
-    const now = Date.now();
+    const now = Date.now(){ passive: true });
 
     if (now - lastTapTime < maxDelay) {
       tapCount++;
@@ -788,7 +788,7 @@ function initLogoTouchHandler(logo) {
   let lastTap = 0;
 
   logo.addEventListener('touchstart', () => {
-    const now = Date.now();
+    const now = Date.now(){ passive: true });
     if (now - lastTap < 600) {
       tapCount++;
     } else {
