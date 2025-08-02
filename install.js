@@ -17,33 +17,26 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("📲 App installée avec succès");
   });
 
-  // Événement déclenché quand le navigateur autorise le prompt
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    window.deferredPrompt = e;
-    console.log("🛎️ Prompt prêt");
-
-    installBtn.onclick = async () => {
-      if (isInstalled) {
-        alert("✅ L'application est déjà installée.");
-        return;
-      }
-
-      if (window.deferredPrompt) {
-        window.deferredPrompt.prompt();
-        const choice = await window.deferredPrompt.userChoice;
-        console.log("Résultat:", choice.outcome);
-        window.deferredPrompt = null;
-      }
-    };
-  });
-
-  // Si beforeinstallprompt n’est jamais déclenché
+  // Par défaut, clique = message d’information
   installBtn.onclick = () => {
     if (isInstalled) {
       alert("✅ L'application est déjà installée.");
     } else if (!window.deferredPrompt) {
       alert("ℹ️ L'installation automatique n'est pas disponible.\nAjoutez manuellement via le menu du navigateur.");
+    } else {
+      // Si le prompt est dispo, on déclenche ici
+      window.deferredPrompt.prompt();
+      window.deferredPrompt.userChoice.then((choice) => {
+        console.log("Résultat:", choice.outcome);
+        window.deferredPrompt = null;
+      });
     }
   };
+
+  // Quand le navigateur déclenche l’événement
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    window.deferredPrompt = e;
+    console.log("🛎️ Prompt prêt");
+  });
 });
