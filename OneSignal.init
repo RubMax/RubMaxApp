@@ -1,8 +1,0 @@
-OneSignal.init({
-  appId: "AKfycbwoTyj8mpGYPfWCOxszGA-SPYTSBsJbJoHyFKgIr-b5xSAu-CO9pgE3bCebLGAWCVDnPg",
-  serviceWorkerPath: 'OneSignalSDKWorker.js',
-  serviceWorkerUpdaterPath: 'OneSignalSDKUpdaterWorker.js',
-  notifyButton: {
-    enable: true,
-  }
-});
