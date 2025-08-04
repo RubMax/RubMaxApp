@@ -1,7 +1,9 @@
 {
   "name": "RubMax Servicos App",
   "short_name": "RubMaxApp",
-  "start_url": "./index.html",
+  "scope": "./",
+  "start_url": "./index.html?homescreen=1",
+  "orientation": "portrait",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
@@ -18,3 +20,4 @@
     }
   ]
 }
+
