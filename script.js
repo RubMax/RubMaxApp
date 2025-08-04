@@ -811,9 +811,3 @@ function initLogoTouchHandler(logo) {
 }
 
 document.addEventListener('DOMContentLoaded', waitForLogoAndInit);
-
-
-
-
-
-
