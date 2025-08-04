@@ -966,3 +966,27 @@
 .article-details {
   flex: 1 1 55%;
 }
+
+
+.article.produit-ligne {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.article.produit-ligne.no-image {
+  justify-content: center;
+  text-align: center;
+}
+
+.article.produit-ligne.no-image .article-details {
+  flex: 1;
+}
+
+.article-image {
+  max-width: 150px;
+}
+
+.article-details {
+  flex: 1;
+}
