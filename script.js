@@ -1,4 +1,4 @@
-window.deferredPrompt = window.deferredPrompt || null;
+ window.deferredPrompt = window.deferredPrompt || null;
 
     // Variable globale pour stocker les détails du produit actuel
     let currentProduct = {};
@@ -255,18 +255,23 @@ function displayProduits(data) {
     data
       .filter(p => p.section === section)
       .forEach(produit => {
-        const div = document.createElement('div');
-        div.className = "article produit-ligne"; // Ajout de la classe pour le style
+       const div = document.createElement('div');
+const hasImage = produit.image && produit.image.trim() !== '';
+div.className = "article produit-ligne" + (hasImage ? "" : " no-image");
 
         const descriptionHtml = produit.description.replace(/\n/g, '<br>');
         const descriptionParam = encodeURIComponent(produit.description);
 
         div.innerHTML = `
-          <div class="article-image">
-            <img src="${produit.image ? escapeHtml(produit.image) : 'https://iili.io/F3yIWCb.png'}" 
-                 alt="${escapeHtml(produit.nom)}" 
-                 onclick="showPopup('${escapeHtml(produit.image)}', '${escapeHtml(produit.nom)}', '${descriptionParam}', '${escapeHtml(produit.prix)}', '${escapeHtml(produit.tailles)}', '${escapeHtml(produit.code)}')">
-          </div>
+          ${hasImage ? `
+  <div class="article-image">
+    <img src="${escapeHtml(produit.image)}" 
+         alt="${escapeHtml(produit.nom)}" 
+         onclick="showPopup('${escapeHtml(produit.image)}', '${escapeHtml(produit.nom)}', '${descriptionParam}', '${escapeHtml(produit.prix)}', '${escapeHtml(produit.tailles)}', '${escapeHtml(produit.code)}')">
+  </div>
+` : ''}
+
+
           <div class="article-details">
             <h3 style="text-transform: uppercase" onclick="showPopup('${escapeHtml(produit.image)}', '${escapeHtml(produit.nom)}', '${descriptionParam}', '${escapeHtml(produit.prix)}', '${escapeHtml(produit.tailles)}', '${escapeHtml(produit.code)}')">${escapeHtml(produit.nom)}</h3>
 
@@ -806,7 +811,6 @@ function initLogoTouchHandler(logo) {
 }
 
 document.addEventListener('DOMContentLoaded', waitForLogoAndInit);
-
 
 
 
