@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Détecte l’installation après coup
   window.addEventListener('appinstalled', () => {
     isInstalled = true;
-    console.log("📲 App installée avec succès");
+    console.log("📲 Aplicativo instalado com sucesso");
   });
 
   // Événement déclenché quand le navigateur autorise le prompt
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     installBtn.onclick = async () => {
       if (isInstalled) {
-        alert("✅ L'application est déjà installée.");
+        alert("✅ O aplicativo já está instalado.");
         return;
       }
 
@@ -41,9 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Si beforeinstallprompt n’est jamais déclenché
   installBtn.onclick = () => {
     if (isInstalled) {
-      alert("✅ L'application est déjà installée.");
+      alert("✅ O aplicativo já está instalado.");
     } else if (!window.deferredPrompt) {
-      alert("ℹ️ L'installation automatique n'est pas disponible.\nAjoutez manuellement via le menu du navigateur.");
+      alert("ℹ️ A instalação automática não está disponível.\nAdicione manualmente pelo menu do navegador.");
     }
   };
 });
+
