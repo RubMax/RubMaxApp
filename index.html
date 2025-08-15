@@ -18,7 +18,8 @@
 
 </head>
 <body>
-  
+  <body style="display:none;">
+
   <!-- En-tête fixe -->
   <div class="fixed-header">
     <div class="logo-container" style="display: flex">
@@ -120,26 +121,46 @@
   <script src="install.js"></script>
 
 <script>
-  // Remplace par l’URL exacte de ta Web App déployée
-  const webAppUrl = "https://script.google.com/macros/s/AKfycbwoTyj8mpGYPfWCOxszGA-SPYTSBsJbJoHyFKgIr-b5xSAu-CO9pgE3bCebLGAWCVDnPg/exec?page=logo";
+document.addEventListener("DOMContentLoaded", () => {
+  const pageBody = document.body;
+  const logoEl = document.getElementById("logo");
+  const logoUrlAPI = "https://script.google.com/macros/s/AKfycbwoTyj8mpGYPfWCOxszGA-SPYTSBsJbJoHyFKgIr-b5xSAu-CO9pgE3bCebLGAWCVDnPg/exec?page=logo";
+  const dataUrlAPI = "https://script.google.com/macros/s/AKfycbwoTyj8mpGYPfWCOxszGA-SPYTSBsJbJoHyFKgIr-b5xSAu-CO9pgE3bCebLGAWCVDnPg/exec?page=api";
 
-  fetch(webAppUrl)
-    .then(response => response.text())
+  // Charger le logo
+  fetch(logoUrlAPI)
+    .then(res => res.text())
     .then(url => {
-      const logoEl = document.getElementById("logo");
-      logoEl.src = url;
-      // Affiche uniquement quand l'image est chargée
-      logoEl.onload = () => {
-        logoEl.style.display = "block";
-      };
+      return new Promise(resolve => {
+        logoEl.onload = resolve; // déclenche quand image est chargée
+        logoEl.src = url;
+      });
     })
-    .catch(err => console.error("Erreur lors du chargement du logo :", err));
+    .then(() => {
+      // Charger les données de la sheet
+      return fetch(dataUrlAPI).then(res => res.json());
+    })
+    .then(data => {
+      // ⚠️ Ici tu appelles ta fonction existante qui affiche les produits
+      if (typeof displayProducts === "function") {
+        displayProducts(data); // exemple
+      }
+      // Tout est prêt → afficher la page
+      pageBody.style.display = "block";
+    })
+    .catch(err => {
+      console.error("Erreur lors du chargement :", err);
+      pageBody.style.display = "block"; // on affiche quand même si erreur
+    });
+});
 </script>
+
 
 
 
 </body>
 </html>
+
 
 
 
