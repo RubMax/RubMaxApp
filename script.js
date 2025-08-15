@@ -178,7 +178,7 @@ function scrollToSection(sectionId) {
 
   // Durées plus lentes
   const fadeDuration = 2400;   // fade-in plus lent
-  const scrollDelay = 50;      // petit délai avant le scroll
+  const scrollDelay = 100;      // petit délai avant le scroll
 
   // Fonction fade-in lente
   function fadeIn(element, duration) {
