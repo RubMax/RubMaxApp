@@ -176,12 +176,26 @@ function scrollToSection(sectionId) {
 
   const firstSectionId = allTitles[0]?.id;
 
+  // Durées plus lentes
+  const fadeDuration = 2400;   // fade-in plus lent
+  const scrollDelay = 50;      // petit délai avant le scroll
+
+  // Fonction fade-in lente
+  function fadeIn(element, duration) {
+    element.style.opacity = 0;
+    element.style.display = 'block';
+    element.style.transition = `opacity ${duration}ms`;
+    requestAnimationFrame(() => {
+      element.style.opacity = 1;
+    });
+  }
+
   if (sectionId === firstSectionId) {
     // Affiche toutes les sections
     allTitles.forEach(title => title.style.display = 'block');
-    allSections.forEach(section => section.style.display = 'block');
+    allSections.forEach(section => fadeIn(section, fadeDuration));
 
-    // Défile tout en haut de la page
+    // Défile tout en haut
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
     // Masque toutes les sections sauf celle sélectionnée
@@ -191,15 +205,19 @@ function scrollToSection(sectionId) {
 
     allSections.forEach((section, i) => {
       const title = allTitles[i];
-      section.style.display = (title.id === sectionId) ? 'block' : 'none';
+      if (title.id === sectionId) {
+        fadeIn(section, fadeDuration);
+      } else {
+        section.style.display = 'none';
+      }
     });
 
-    // Forcer le défilement vers le titre de la section visible
+    // Défile vers la section visible
     const selectedTitle = document.getElementById(sectionId);
     if (selectedTitle) {
       setTimeout(() => {
         selectedTitle.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 50); // petit délai pour s'assurer que l'affichage est prêt
+      }, scrollDelay);
     }
   }
 }
