@@ -739,9 +739,17 @@
     }
 
     @media (max-width: 576px) {
-      .article {
-        width: 100%;
-      }
+        .article {
+    width: calc(50% - 0.5rem);
+  }
+}
+
+/* Grands écrans (ordinateurs de bureau) → 4 articles */
+@media (min-width: 1200px) {
+  .article {
+    width: calc(25% - 0.5rem);
+  }
+}
       
       .section-btn {
         padding: 5px 10px;
