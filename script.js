@@ -110,53 +110,47 @@
   sections.forEach((section, index) => {
     const sectionId = generateSectionId(section);
     const button = document.createElement('a');
-    button.href = `#${sectionId}`;
-    button.className = 'section-btn';
 
     if (index === 0) {
-      // ✅ Premier bouton = icône menu
-      button.innerHTML = '<span style="font-size:22px;">☰</span>';
-    } else {
-      button.textContent = section.toUpperCase();
-      // Par défaut : cacher tous les boutons sauf le premier
-      button.style.display = "none";
-    }
+      // Premier bouton devient ☰ (menu)
+      button.textContent = "☰";
+      button.className = 'menu-toggle';
 
-    button.addEventListener('click', function(e) {
-      e.preventDefault();
-
-      // Si on clique sur le premier bouton et que les autres sont cachés → les afficher
-      if (index === 0 && otherButtonsHidden) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
         const allBtns = navContainer.querySelectorAll('.section-btn');
         allBtns.forEach((btn, i) => {
-          if (i > 0) btn.style.display = "inline-block";
+          if (i > 0) {
+            btn.style.display = otherButtonsHidden ? "inline-block" : "none";
+          }
         });
-        otherButtonsHidden = false;
-      }
-
-      // Retirer les classes actives des autres boutons
-      document.querySelectorAll('.section-btn').forEach(btn => {
-        btn.classList.remove('active');
+        otherButtonsHidden = !otherButtonsHidden;
       });
+    } else {
+      // Les autres boutons = sections
+      button.href = `#${sectionId}`;
+      button.textContent = section.toUpperCase();
+      button.className = 'section-btn';
+      button.style.display = "none"; // par défaut cachés
 
-      // Activer ce bouton
-      button.classList.add('active');
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
 
-      scrollToSection(sectionId);
-    });
+        // Retirer les classes actives des autres boutons
+        document.querySelectorAll('.section-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+
+        // Activer ce bouton
+        button.classList.add('active');
+
+        scrollToSection(sectionId);
+      });
+    }
 
     navContainer.appendChild(button);
-
-    // ✅ Activer automatiquement le premier bouton
-    if (index === 0) {
-      button.classList.add('active');
-      setTimeout(() => {
-        scrollToSection(sectionId);
-      }, 100);
-    }
   });
 }
-
 
     
     /**
