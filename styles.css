@@ -983,9 +983,9 @@
 }
 /* Bouton menu ☰ */
 .menu-toggle {
-  color: #000;           /* noir */
+  color: ;           /* noir */
   font-weight: bold;     /* gras */
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   text-align: center;
 }
