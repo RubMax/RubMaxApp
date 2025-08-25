@@ -111,11 +111,14 @@
     const sectionId = generateSectionId(section);
     const button = document.createElement('a');
     button.href = `#${sectionId}`;
-    button.textContent = section.toUpperCase();
     button.className = 'section-btn';
 
-    // Par défaut : cacher tous les boutons sauf le premier
-    if (index > 0) {
+    if (index === 0) {
+      // ✅ Premier bouton = icône menu
+      button.innerHTML = '<span style="font-size:22px;">☰</span>';
+    } else {
+      button.textContent = section.toUpperCase();
+      // Par défaut : cacher tous les boutons sauf le premier
       button.style.display = "none";
     }
 
