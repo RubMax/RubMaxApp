@@ -981,3 +981,11 @@
 .article-details {
   flex: 1;
 }
+/* Bouton menu ☰ */
+.menu-toggle {
+  color: #000;           /* noir */
+  font-weight: bold;     /* gras */
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
