@@ -105,6 +105,8 @@
   const navContainer = document.getElementById('section-nav');
   navContainer.innerHTML = '';
 
+  let otherButtonsHidden = true; // état : autres boutons cachés
+
   sections.forEach((section, index) => {
     const sectionId = generateSectionId(section);
     const button = document.createElement('a');
@@ -112,8 +114,22 @@
     button.textContent = section.toUpperCase();
     button.className = 'section-btn';
 
+    // Par défaut : cacher tous les boutons sauf le premier
+    if (index > 0) {
+      button.style.display = "none";
+    }
+
     button.addEventListener('click', function(e) {
       e.preventDefault();
+
+      // Si on clique sur le premier bouton et que les autres sont cachés → les afficher
+      if (index === 0 && otherButtonsHidden) {
+        const allBtns = navContainer.querySelectorAll('.section-btn');
+        allBtns.forEach((btn, i) => {
+          if (i > 0) btn.style.display = "inline-block";
+        });
+        otherButtonsHidden = false;
+      }
 
       // Retirer les classes actives des autres boutons
       document.querySelectorAll('.section-btn').forEach(btn => {
@@ -131,10 +147,9 @@
     // ✅ Activer automatiquement le premier bouton
     if (index === 0) {
       button.classList.add('active');
-      // Appeler scrollToSection pour afficher la première section
       setTimeout(() => {
         scrollToSection(sectionId);
-      }, 100); // petit délai pour que les sections soient rendues
+      }, 100);
     }
   });
 }
