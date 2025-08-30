@@ -119,27 +119,11 @@
       button.addEventListener('click', function(e) {
         e.preventDefault();
         const allBtns = navContainer.querySelectorAll('.section-btn');
-
-        if (otherButtonsHidden) {
-          // 1er clic → afficher les autres boutons
-          allBtns.forEach((btn, i) => {
-            if (i > 0) btn.style.display = "inline-block";
-          });
-        } else {
-          // 2e clic → cacher les autres boutons et revenir à l'état initial
-          allBtns.forEach((btn, i) => {
-            if (i > 0) btn.style.display = "none";
-            btn.classList.remove('active'); // retirer actives
-          });
-
-          // Défilement vers la première section
-          if (sections.length > 1) {
-            const firstSectionId = generateSectionId(sections[1]); // première section après ☰
-            scrollToSection(firstSectionId);
+        allBtns.forEach((btn, i) => {
+          if (i > 0) {
+            btn.style.display = otherButtonsHidden ? "inline-block" : "none";
           }
-        }
-
-        // Inverser l'état
+        });
         otherButtonsHidden = !otherButtonsHidden;
       });
     } else {
@@ -153,7 +137,9 @@
         e.preventDefault();
 
         // Retirer les classes actives des autres boutons
-        document.querySelectorAll('.section-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.section-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
 
         // Activer ce bouton
         button.classList.add('active');
@@ -250,34 +236,51 @@ function scrollToSection(sectionId) {
 
 
 function handleScroll() {
-  const sections = document.querySelectorAll('h2'); // toutes les sections repérées par <h2>
-  const header = document.querySelector('.fixed-header'); // ton header fixe
-  const headerHeight = header ? header.offsetHeight : 0; // sécurité si header absent
+  const header = document.querySelector('.fixed-header');
+  const headerHeight = header ? header.offsetHeight : 0;
   const scrollPosition = window.scrollY + headerHeight + 20;
 
+  // Ne considérer que les titres visibles et qui ont un id
+  const sections = [...document.querySelectorAll('h2')]
+    .filter(s => s.offsetParent !== null && s.id);
+
+  if (sections.length === 0) return;
+
+  let activeFound = false;
+
   sections.forEach(section => {
-    const sectionTop = section.offsetTop;
+    const rect = section.getBoundingClientRect();
+    const sectionTop = window.scrollY + rect.top;
     const sectionHeight = section.offsetHeight;
     const sectionId = section.id;
 
     if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-      // retirer la classe active de tous les boutons
-      document.querySelectorAll('.section-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
+      // retirer "active" de tous les boutons
+      document.querySelectorAll('.section-btn').forEach(btn => btn.classList.remove('active'));
 
-      // activer le bouton correspondant
-      const targetBtn = document.querySelector(`.section-btn[href="#${sectionId}"]`);
-      if (targetBtn) {
-        targetBtn.classList.add('active');
-      }
+      // sécuriser l'id dans le sélecteur
+      const selector = `.section-btn[href="#${CSS.escape(sectionId)}"]`;
+      const activeBtn = document.querySelector(selector);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      activeFound = true;
     }
   });
+
+  // Si aucune section trouvée et qu'on est en bas de page, activer la dernière section visible
+  if (!activeFound) {
+    const scrollBottom = window.scrollY + window.innerHeight;
+    if (document.documentElement.scrollHeight - scrollBottom < 5) {
+      const last = sections[sections.length - 1];
+      if (last) {
+        document.querySelectorAll('.section-btn').forEach(btn => btn.classList.remove('active'));
+        const selector = `.section-btn[href="#${CSS.escape(last.id)}"]`;
+        const activeBtn = document.querySelector(selector);
+        if (activeBtn) activeBtn.classList.add('active');
+      }
+    }
+  }
 }
-
-// ⬇️ Ajout de l'écouteur au scroll
-window.addEventListener('scroll', handleScroll);
-
 
     
     
