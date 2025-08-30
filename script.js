@@ -119,11 +119,27 @@
       button.addEventListener('click', function(e) {
         e.preventDefault();
         const allBtns = navContainer.querySelectorAll('.section-btn');
-        allBtns.forEach((btn, i) => {
-          if (i > 0) {
-            btn.style.display = otherButtonsHidden ? "inline-block" : "none";
+
+        if (otherButtonsHidden) {
+          // 1er clic → afficher les autres boutons
+          allBtns.forEach((btn, i) => {
+            if (i > 0) btn.style.display = "inline-block";
+          });
+        } else {
+          // 2e clic → cacher les autres boutons et revenir à l'état initial
+          allBtns.forEach((btn, i) => {
+            if (i > 0) btn.style.display = "none";
+            btn.classList.remove('active'); // retirer actives
+          });
+
+          // Défilement vers la première section
+          if (sections.length > 1) {
+            const firstSectionId = generateSectionId(sections[1]); // première section après ☰
+            scrollToSection(firstSectionId);
           }
-        });
+        }
+
+        // Inverser l'état
         otherButtonsHidden = !otherButtonsHidden;
       });
     } else {
@@ -137,9 +153,7 @@
         e.preventDefault();
 
         // Retirer les classes actives des autres boutons
-        document.querySelectorAll('.section-btn').forEach(btn => {
-          btn.classList.remove('active');
-        });
+        document.querySelectorAll('.section-btn').forEach(btn => btn.classList.remove('active'));
 
         // Activer ce bouton
         button.classList.add('active');
@@ -236,29 +250,35 @@ function scrollToSection(sectionId) {
 
 
 function handleScroll() {
-  const sections = document.querySelectorAll('h2');
-  const scrollPosition = window.scrollY + document.querySelector('.fixed-header').offsetHeight + 20;
-  
+  const sections = document.querySelectorAll('h2'); // toutes les sections repérées par <h2>
+  const header = document.querySelector('.fixed-header'); // ton header fixe
+  const headerHeight = header ? header.offsetHeight : 0; // sécurité si header absent
+  const scrollPosition = window.scrollY + headerHeight + 20;
+
   sections.forEach(section => {
     const sectionTop = section.offsetTop;
     const sectionHeight = section.offsetHeight;
     const sectionId = section.id;
-    
+
     if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+      // retirer la classe active de tous les boutons
       document.querySelectorAll('.section-btn').forEach(btn => {
         btn.classList.remove('active');
       });
-      document.querySelector(`.section-btn[href="#${sectionId}"]`).classList.add('active');
+
+      // activer le bouton correspondant
+      const targetBtn = document.querySelector(`.section-btn[href="#${sectionId}"]`);
+      if (targetBtn) {
+        targetBtn.classList.add('active');
+      }
     }
   });
 }
 
-// Initialiser l'écouteur de défilement
-document.addEventListener('DOMContentLoaded', function() {
-  window.addEventListener('scroll', handleScroll);
-  
-  
-});
+// ⬇️ Ajout de l'écouteur au scroll
+window.addEventListener('scroll', handleScroll);
+
+
     
     
 function displayProduits(data) {
