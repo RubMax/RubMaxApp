@@ -105,52 +105,59 @@
   const navContainer = document.getElementById('section-nav');
   navContainer.innerHTML = '';
 
-  let otherButtonsHidden = true; // état : autres boutons cachés
+  // === Bouton MENU en première position ===
+  const menuButton = document.createElement('a');
+  menuButton.href = "#";
+  menuButton.textContent = "☰ MENU";
+  menuButton.className = 'menu-btn active';
+  navContainer.appendChild(menuButton);
+
+  const otherButtons = [];
 
   sections.forEach((section, index) => {
     const sectionId = generateSectionId(section);
     const button = document.createElement('a');
+    button.href = `#${sectionId}`;
+    button.textContent = section.toUpperCase();
+    button.className = 'section-btn hidden'; // caché au départ
 
-    if (index === 0) {
-      // Premier bouton devient ☰ (menu)
-      button.textContent = "☰";
-      button.className = 'menu-toggle';
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
 
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
-        const allBtns = navContainer.querySelectorAll('.section-btn');
-        allBtns.forEach((btn, i) => {
-          if (i > 0) {
-            btn.style.display = otherButtonsHidden ? "inline-block" : "none";
-          }
-        });
-        otherButtonsHidden = !otherButtonsHidden;
-      });
-    } else {
-      // Les autres boutons = sections
-      button.href = `#${sectionId}`;
-      button.textContent = section.toUpperCase();
-      button.className = 'section-btn';
-      button.style.display = "none"; // par défaut cachés
+      // Retirer "active" des autres boutons
+      document.querySelectorAll('.section-btn').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
 
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
+      // Faire défiler jusqu’à la section voulue
+      document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
 
-        // Retirer les classes actives des autres boutons
-        document.querySelectorAll('.section-btn').forEach(btn => {
-          btn.classList.remove('active');
-        });
-
-        // Activer ce bouton
-        button.classList.add('active');
-
-        scrollToSection(sectionId);
-      });
-    }
+      // ✅ Ne pas recacher les autres boutons
+    });
 
     navContainer.appendChild(button);
+    otherButtons.push(button);
+
+    // Activer automatiquement la première section
+    if (index === 0) {
+      setTimeout(() => {
+        document.getElementById(sectionId).scrollIntoView({ behavior: "instant" });
+      }, 100);
+    }
+  });
+
+  // === Gestion du clic sur MENU ===
+  let menuOpen = false;
+  menuButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    menuOpen = !menuOpen;
+
+    otherButtons.forEach(btn => {
+      if (menuOpen) btn.classList.remove('hidden');
+      else btn.classList.add('hidden');
+    });
   });
 }
+
 
     
     /**
