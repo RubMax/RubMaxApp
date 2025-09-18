@@ -101,25 +101,16 @@
       });
     }
     
-    function createSectionButtons(sections) {
+function createSectionButtons(sections) {
   const navContainer = document.getElementById('section-nav');
   navContainer.innerHTML = '';
-
-  // === Bouton MENU en première position ===
-  const menuButton = document.createElement('a');
-  menuButton.href = "#";
-  menuButton.textContent = "☰ MENU";
-  menuButton.className = 'menu-btn active';
-  navContainer.appendChild(menuButton);
-
-  const otherButtons = [];
 
   sections.forEach((section, index) => {
     const sectionId = generateSectionId(section);
     const button = document.createElement('a');
     button.href = `#${sectionId}`;
     button.textContent = section.toUpperCase();
-    button.className = 'section-btn hidden'; // caché au départ
+    button.className = 'section-btn';
 
     button.addEventListener('click', function(e) {
       e.preventDefault();
@@ -130,33 +121,20 @@
 
       // Faire défiler jusqu’à la section voulue
       document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
-
-      // ✅ Ne pas recacher les autres boutons
     });
 
     navContainer.appendChild(button);
-    otherButtons.push(button);
 
     // Activer automatiquement la première section
     if (index === 0) {
+      button.classList.add('active');
       setTimeout(() => {
         document.getElementById(sectionId).scrollIntoView({ behavior: "instant" });
       }, 100);
     }
   });
-
-  // === Gestion du clic sur MENU ===
-  let menuOpen = false;
-  menuButton.addEventListener('click', function(e) {
-    e.preventDefault();
-    menuOpen = !menuOpen;
-
-    otherButtons.forEach(btn => {
-      if (menuOpen) btn.classList.remove('hidden');
-      else btn.classList.add('hidden');
-    });
-  });
 }
+
 
 
     
